@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 char *asciiToBin(char a);
 int factorial(int n);
@@ -9,8 +10,12 @@ void runHanoi(int n, char x, char y, char z);
 void lab2Reverse(char *userString, int start, int end);
 void lab2Ascii(char *userString, int start, int end);
 void binaryConversion(char target, int i);
+int funciton6(char *userString, int start, int end, int sum);
+int decimalConversion(int sum, int i);
 
+int userStringSum = 0;
 char binary[8];
+int sum = 0;
 
 int main() {
 
@@ -19,7 +24,6 @@ int main() {
   int userChoice = 0;
   int userN = 0;
   char userString[256];
-
 
 
   while (again ==1){
@@ -51,7 +55,7 @@ int main() {
         int i;
 
         for(i=0; i<userN; i++){
-          printf("%i", fibbonacci(i));
+          printf("%i ", fibbonacci(i));
         }
         printf("\n");
         userN = 0;
@@ -80,7 +84,12 @@ int main() {
         functionsExecuted++;
         break;
       case 6:
-        printf("You have chosen ascii to string\n");
+        printf("You have chosen function 6\n");
+        printf("Enter your string: ");
+        scanf(" %[^\n]", userString);
+        printf("You have entered: %s\n", userString);
+        userStringSum = funciton6(userString, 0, strlen(userString) -1, sum);
+        printf("The sum is: %d\n", userStringSum);
         functionsExecuted++;
         break;
       default:
@@ -91,6 +100,7 @@ int main() {
 		scanf("%i", &again);
 
   }
+
 
   return functionsExecuted;
 
@@ -149,7 +159,7 @@ void lab2Reverse(char *userString, int start, int end) {
 }
 
 void lab2Ascii(char *userString, int start, int end) {
-  int sum = 0;
+
 
   if (end < start) {
     printf("\n");
@@ -177,4 +187,35 @@ void binaryConversion(char target, int i){
 
     binaryConversion(target/2, i-1);
   }
+}
+
+int funciton6(char *userString, int start, int end, int sum) {
+
+
+  if (end < start) {
+    printf("\n");
+    return sum;
+  }
+
+
+//  sum = sum + decimalConversion();
+  binaryConversion(userString[start], 7);
+  sum += decimalConversion(0, 7);
+  funciton6(userString, ++start, end, sum);
+}
+
+int decimalConversion(int sum, int i) {
+
+  //exit condition
+  if (i < 0) {
+    return sum;
+  }
+  else {
+    if (binary[i] == '1') {
+      sum = sum + pow(2, 7 - i);
+    } else {
+      sum += 0;
+    }
+  }
+  decimalConversion(sum, --i);
 }
